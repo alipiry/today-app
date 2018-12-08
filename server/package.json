@@ -1,0 +1,38 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server side of today-app",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node --presets env,stage-2 src/server.js",
+    "sequelize": "sequelize init:models; sequelize init:config"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/alipiry/today-app.git"
+  },
+  "author": "Ali Piry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alipiry/today-app/issues"
+  },
+  "homepage": "https://github.com/alipiry/today-app#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "nodemon": "^1.18.7",
+    "sequelize-cli": "^5.4.0"
+  },
+  "dependencies": {
+    "apollo-server": "^2.2.6",
+    "apollo-server-express": "^2.2.6",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "faker": "^4.1.0",
+    "graphql": "^14.0.2",
+    "lodash.times": "^4.3.2",
+    "mysql2": "^1.6.4",
+    "sequelize": "^4.41.2"
+  }
+}
