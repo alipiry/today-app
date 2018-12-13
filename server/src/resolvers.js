@@ -1,6 +1,11 @@
 export default {
   Query: {
     tasks: (parent, args, { db }) => db.tasks.findAll(),
+    task: (parent, { title }, { db }) => db.tasks.findOne({
+      where: {
+        title
+      }
+    }),
   },
   Mutation: {
     createTask: (parent, { title, content }, { db }) => {
