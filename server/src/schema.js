@@ -1,12 +1,12 @@
 export default `
   type Task {
     id: ID!
-    title: String
+    title: String!
     content: String!
   }
   type Query {
     tasks: [Task!]!
-    task(id: ID!): Task
+    task(title: String!): Task!
   }
   type Mutation {
     createTask(title: String!, content:String!): Task!
