@@ -1,14 +1,15 @@
 import React from 'react';
 import {
-  createBottomTabNavigator
+  createBottomTabNavigator,
+  createAppContainer
 } from 'react-navigation';
 import  Icon  from 'react-native-vector-icons/Ionicons';
 
-import HomeScreen from './screens/HomeScreen';
-import AddScreen from './screens/AddScreen';
-import MoreScreen from './screens/MoreScreen';
+import HomeScreen from '../screens/HomeScreen';
+import AddScreen from '../screens/AddScreen';
+import MoreScreen from '../screens/MoreScreen';
 
-export default createBottomTabNavigator(
+export default createAppContainer(createBottomTabNavigator(
   {
     Add: AddScreen,
     Home: HomeScreen,
@@ -42,4 +43,4 @@ export default createBottomTabNavigator(
     },
     initialRouteName: 'Home',
   }
-);
+));
