@@ -1,36 +1,67 @@
 import React from 'react';
 import {
-  View,
   StyleSheet,
   Text,
-  Button,
+  View,
+  SafeAreaView,
+  FlatList
 } from 'react-native';
+import { graphql } from 'react-apollo';
 
-export default class HomeScreen extends React.Component {
+import { getTasks } from '../graphql/queries';
+
+class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Home',
   };
-  onPress = () => this.props.navigation.navigate('Add');
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>
-          ashfjaksfkajsj fkasjfkl'asf
-        </Text>
-        <Button
-          title={"Add items"}
-          onPress={this.onPress}
-        />
 
-      </View>
+  renderItem = ({item}) => (
+    <View style={styles.flatView}>
+      <Text style={styles.item}>{item.title.toUpperCase()}</Text>
+    </View>
+  );
+
+  render() {
+    const {
+      data: {
+        tasks
+      }
+    } = this.props;
+
+    return (
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={tasks}
+          renderItem={this.renderItem}
+          keyExtractor={item => item.id}
+        />
+      </SafeAreaView>
     );
   }
 }
+export default graphql(getTasks)(HomeScreen);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  item: {
+    padding: 5,
+    fontSize: 20,
+  },
+  SearchBar: {
+    paddingHorizontal: 10,
+    margin: 10,
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 1,
+    fontSize: 18
+  },
+  flatView: {
+    padding: 20
+  },
+  dialog: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
