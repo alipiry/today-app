@@ -1,10 +1,9 @@
 export default {
   Query: {
-    tasks: (parent, args, { db }) => db.tasks.findAll(),
-    task: (parent, { title }, { db }) => db.tasks.findOne({
-      where: {
-        title
-      }
+    tasks: (parent, args, { db }) => db.tasks.findAll({
+      order: [
+        ['createdAt', 'DESC'],
+      ],
     }),
   },
   Mutation: {

@@ -6,7 +6,6 @@ export default `
   }
   type Query {
     tasks: [Task!]!
-    task(title: String!): Task!
   }
   type Mutation {
     createTask(title: String!, content: String!): Task!
