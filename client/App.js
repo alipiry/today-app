@@ -8,4 +8,4 @@ export default App = () => (
   <ApolloProvider client={client}>
     <Tabs/>
   </ApolloProvider>
-  );
+);
