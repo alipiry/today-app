@@ -6,8 +6,11 @@ import {
   TouchableOpacity,
   Text
 } from 'react-native';
+import { graphql } from 'react-apollo';
 
-export default class AddScreen extends React.Component {
+import { addTask } from "../graphql/mutations";
+
+class AddScreen extends React.Component {
   static navigationOptions = {
     title: 'Add',
   };
@@ -15,7 +18,16 @@ export default class AddScreen extends React.Component {
   state = {
     title: '',
     description: '',
-    error: false
+  };
+
+  handleAddTask = () => {
+    const { mutate } = this.props;
+    mutate({
+      variables: {
+        title: this.state.title,
+        content: this.state.description,
+      },
+    }).then(() => this.props.navigation.goBack());
   };
 
   render() {
@@ -34,6 +46,7 @@ export default class AddScreen extends React.Component {
         />
         <TouchableOpacity
           style={styles.submitButton}
+          onPress={this.handleAddTask}
         >
           <Text
             style={styles.submitButtonText}
@@ -45,6 +58,7 @@ export default class AddScreen extends React.Component {
     );
   }
 }
+export default graphql(addTask)(AddScreen);
 
 const styles = StyleSheet.create({
   container: {
