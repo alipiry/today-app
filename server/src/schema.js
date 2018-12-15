@@ -9,8 +9,8 @@ export default `
     task(title: String!): Task!
   }
   type Mutation {
-    createTask(title: String!, content:String!): Task!
-    updateTask(id: ID!, title: String!, content:String!): [Boolean!]!
+    createTask(title: String!, content: String!): Task!
+    updateTask(id: ID!, title: String!, content: String!): [Boolean!]!
     deleteTask(id: ID!): Boolean!
   }
 `;
