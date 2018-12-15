@@ -7,6 +7,7 @@ import {
 import HomeScreen from "../screens/HomeScreen";
 import AddScreen from "../screens/AddScreen";
 import EditScreen from "../screens/EditScreen";
+import DetailScreen from "../screens/DetailScreen";
 
 export default createAppContainer(createStackNavigator(
   {
@@ -19,6 +20,9 @@ export default createAppContainer(createStackNavigator(
     Edit: {
       screen: EditScreen
     },
+    Detail: {
+      screen: DetailScreen
+    }
   },
   {
     initialRouteName: "Home"
