@@ -18,13 +18,13 @@ const app = express();
 server.applyMiddleware({ app });
 //
 // db.sequelize.sync().then(() => {
-//   // populate tasks table with dummy data
-//   db.tasks.bulkCreate(
-//     times(1, () => ({
-//       title: faker.lorem.sentence(),
-//       content: faker.lorem.paragraph(),
-//     }))
-//   );
+  // // populate tasks table with dummy data
+  // db.tasks.bulkCreate(
+  //   times(1, () => ({
+  //     title: 't3',
+  //     content: 'c3'
+  //   }))
+  // );
 
 app.listen({ port: PORT }, () =>
 console.log(`🚀 Server ready at http://localhost:8080${server.graphqlPath}`)
