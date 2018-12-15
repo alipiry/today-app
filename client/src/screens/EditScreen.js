@@ -5,12 +5,15 @@ import {
   Text,
 } from 'react-native';
 
-export default class MoreScreen extends React.Component {
+export default class EditScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Edit',
+  };
   render() {
     return (
       <View style={styles.container}>
         <Text>
-          asfjnasfnaks
+          Edit
         </Text>
       </View>
     );
