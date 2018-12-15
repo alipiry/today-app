@@ -4,21 +4,39 @@ import {
   Text,
   View,
   SafeAreaView,
-  FlatList
+  FlatList,
+  Button,
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 import { graphql } from 'react-apollo';
 
-import { getTasks } from '../graphql/queries';
+import { getTasks } from "../graphql/queries";
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Home',
   };
 
+  itemOptions = () =>
+    Alert.alert(
+      'Item',
+      'Options',
+      [
+        {text: 'Edit', onPress: () => this.props.navigation.navigate('Edit')},
+        {text: 'Remove', onPress: () => console.log('Remove Pressed')},
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
+      ],
+      { cancelable: false }
+    );
+
   renderItem = ({item}) => (
-    <View style={styles.flatView}>
+    <TouchableOpacity
+      style={styles.flatView}
+      onPress={this.itemOptions}
+    >
       <Text style={styles.item}>{item.title.toUpperCase()}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   render() {
@@ -35,6 +53,13 @@ class HomeScreen extends React.Component {
           renderItem={this.renderItem}
           keyExtractor={item => item.id}
         />
+        <View style={styles.button}>
+          <Button
+            title="Add"
+            onPress={() => this.props.navigation.navigate('Add')}
+            color="white"
+          />
+        </View>
       </SafeAreaView>
     );
   }
@@ -48,20 +73,14 @@ const styles = StyleSheet.create({
   item: {
     padding: 5,
     fontSize: 20,
-  },
-  SearchBar: {
-    paddingHorizontal: 10,
-    margin: 10,
-    height: 50,
-    borderColor: "gray",
-    borderWidth: 1,
-    fontSize: 18
+    borderBottomWidth: 10,
   },
   flatView: {
-    padding: 20
+    padding: 20,
   },
-  dialog: {
-    alignItems: 'center',
-    justifyContent: 'center',
+  button: {
+    backgroundColor: 'black',
+    margin: 25,
+    borderRadius: 40,
   }
 });
