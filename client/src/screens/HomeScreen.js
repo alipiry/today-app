@@ -1,15 +1,14 @@
 import React from 'react';
 import {
   StyleSheet,
-  Text,
   SafeAreaView,
   FlatList,
-  TouchableOpacity,
-  View
+  TouchableOpacity
 } from 'react-native';
 import { graphql, compose } from 'react-apollo';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Swipeout from 'react-native-swipeout';
+import { ListItem, SearchBar } from 'react-native-elements';
 
 import { getTasks } from "../graphql/queries";
 import { removeTask } from "../graphql/mutations";
@@ -43,14 +42,6 @@ class HomeScreen extends React.Component {
   renderItem = ({item}) => {
     const swipeOutItems = [
       {
-        text: 'Details',
-        onPress: () => this.props.navigation.navigate('Detail', {
-          title: item.title,
-          content: item.content
-        }),
-        backgroundColor: 'green'
-      },
-      {
         text: 'Remove',
         onPress: () => this.handleRemoveTask(item),
         backgroundColor: 'red'
@@ -65,21 +56,24 @@ class HomeScreen extends React.Component {
     return (
       <Swipeout
         autoClose={true}
-        left={swipeOutItems}
+        right={swipeOutItems}
         style={styles.flatView}
       >
-        <View>
-          <Text style={styles.item}>{item.title.toUpperCase()}</Text>
-        </View>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate('Detail', {
+              title: item.title,
+              content: item.content
+            });
+          }}
+        >
+          <ListItem
+            title={item.title}
+            subtitle={item.content}
+            containerStyle={styles.listItem}
+          />
+        </TouchableOpacity>
       </Swipeout>
-    );
-  };
-
-  renderHeader = () => {
-    return (
-      <View>
-        <Text style={styles.headerText}>Tasks</Text>
-      </View>
     );
   };
 
@@ -92,8 +86,12 @@ class HomeScreen extends React.Component {
 
     return (
       <SafeAreaView style={styles.container}>
+        <SearchBar
+          placeholder="Search"
+          lightTheme
+          round
+        />
         <FlatList
-          ListHeaderComponent={this.renderHeader}
           data={tasks}
           renderItem={this.renderItem}
           keyExtractor={item => item.id}
@@ -123,9 +121,7 @@ const styles = StyleSheet.create({
   headerIcon: {
     marginRight: 20
   },
-  headerText: {
-    fontSize: 35,
-    fontWeight: 'bold',
-    marginLeft: 10
+  listItem: {
+    borderBottomWidth: 0
   }
 });
