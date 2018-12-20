@@ -10,6 +10,7 @@ import {
 import { graphql } from 'react-apollo';
 
 import { addTask } from "../graphql/mutations";
+import { getTasks } from "../graphql/queries";
 
 class AddScreen extends React.Component {
   static navigationOptions = {
@@ -41,6 +42,11 @@ class AddScreen extends React.Component {
           title: this.state.title,
           content: this.state.description,
         },
+        refetchQueries: [
+          {
+            query: getTasks,
+          },
+        ],
       }).then(() => this.handleAlert());
     } else {
       Alert.alert(
