@@ -4,7 +4,8 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Text
+  Text,
+  Alert
 } from 'react-native';
 import { graphql } from 'react-apollo';
 
@@ -18,31 +19,72 @@ class AddScreen extends React.Component {
   state = {
     title: '',
     description: '',
+    titleValidation: false,
+    desValidation: false
+  };
+
+  handleAlert = () => {
+    Alert.alert(
+      'Task Added',
+      '',
+      [
+        { text: 'Ok', onPress: () => this.props.navigation.goBack() , style: 'cancel' },
+      ]
+    );
   };
 
   handleAddTask = () => {
     const { mutate } = this.props;
-    mutate({
-      variables: {
-        title: this.state.title,
-        content: this.state.description,
-      },
-    }).then(() => this.props.navigation.goBack());
+    if (this.state.titleValidation && this.state.desValidation) {
+      mutate({
+        variables: {
+          title: this.state.title,
+          content: this.state.description,
+        },
+      }).then(() => this.handleAlert());
+    } else {
+      Alert.alert(
+        'Title and Description field cannot be empty!',
+        '',
+        [
+          { text: 'Ok', onPress: () => {} , style: 'cancel' },
+        ]
+      );
+    }
+  };
+
+  handleTitle = (title) => {
+    if (title.length > 0) {
+      this.setState({title: title});
+      this.setState({titleValidation: true});
+    }
+  };
+
+  handleDescription = (description) => {
+    if (description.length > 0) {
+      this.setState({description});
+      this.setState({desValidation: true});
+    }
   };
 
   render() {
     return (
       <View style={styles.container}>
         <TextInput
+          autoCorrect={false}
+          autoFocus={true}
           style={styles.inputTitle}
           placeholder="Title"
-          onChangeText={(title) => this.setState({title})}
+          onChangeText={(title) => this.handleTitle(title)}
+          maxLength={40}
         />
         <TextInput
+          autoCorrect={false}
           multiline={true}
           style={styles.inputDescription}
           placeholder="Description"
-          onChangeText={(description) => this.setState({description})}
+          onChangeText={(description) => this.handleDescription(description)}
+          maxLength={100}
         />
         <TouchableOpacity
           style={styles.submitButton}
@@ -74,7 +116,7 @@ const styles = StyleSheet.create({
   inputDescription: {
     padding: 5,
     margin: 15,
-    height: 100,
+    height: 60,
     borderColor: '#7e7e7e',
     borderWidth: 1
   },
