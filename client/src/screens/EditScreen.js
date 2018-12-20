@@ -10,6 +10,7 @@ import {
 import { graphql } from 'react-apollo';
 
 import { updateTask } from "../graphql/mutations";
+import { getTasks } from "../graphql/queries";
 
 class EditScreen extends React.Component {
   static navigationOptions = {
@@ -37,13 +38,18 @@ class EditScreen extends React.Component {
     const { mutate } = this.props;
     const { state } = this.props.navigation;
 
-    if (this.state.titleValidation && this.state.desValidation) {
+    if (this.state.titleValidation || this.state.desValidation) {
       mutate({
         variables: {
           id: state.params.id,
-          title: this.state.title,
-          content: this.state.description,
+          title: this.state.title === '' ? state.params.title : this.state.title,
+          content: this.state.description === '' ? state.params.content : this.state.description,
         },
+        refetchQueries: [
+          {
+            query: getTasks,
+          },
+        ],
       }).then(() => this.handleAlert());
     } else {
       mutate({
@@ -52,6 +58,11 @@ class EditScreen extends React.Component {
           title: state.params.title,
           content: state.params.content,
         },
+        refetchQueries: [
+          {
+            query: getTasks,
+          },
+        ],
       }).then(() => Alert.alert(
         "You didn't change anything!",
         '',
