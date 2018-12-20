@@ -48,7 +48,11 @@ class HomeScreen extends React.Component {
       },
       {
         text: 'Edit',
-        onPress: () => this.props.navigation.navigate('Edit', { id: item.id }),
+        onPress: () => this.props.navigation.navigate('Edit', {
+          id: item.id,
+          title: item.title,
+          content: item.content
+        }),
         backgroundColor: 'blue'
       }
     ];
