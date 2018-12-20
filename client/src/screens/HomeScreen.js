@@ -33,6 +33,11 @@ class HomeScreen extends React.Component {
       )
   });
 
+  state = {
+    data: [],
+    isSearching: false
+  };
+
   handleRemoveTask = (item) => {
     const { mutate } = this.props;
     Alert.alert(
@@ -113,6 +118,27 @@ class HomeScreen extends React.Component {
     )
   };
 
+  handleSearch = (text) => {
+    const {
+      data: {
+        tasks
+      }
+    } = this.props;
+    this.setState({ isSearching: true });
+
+    const newData = tasks.filter(function(item) {
+      const itemData = item.title.toUpperCase();
+      const textData = text.toUpperCase();
+      return itemData.indexOf(textData) > -1;
+    });
+
+    this.setState({
+      data: newData,
+    });
+    // hack!
+    setTimeout(() => this.setState({isSearching: false}), 5000);
+  };
+
   render() {
     const {
       data: {
@@ -126,9 +152,10 @@ class HomeScreen extends React.Component {
           placeholder="Search"
           lightTheme
           round
+          onChangeText={text => this.handleSearch(text)}
         />
         <FlatList
-          data={tasks}
+          data={this.state.isSearching ? this.state.data : tasks}
           renderItem={this.renderItem}
           ListEmptyComponent={this.showEmptyList}
           keyExtractor={item => item.id}
