@@ -3,7 +3,10 @@ import {
   StyleSheet,
   SafeAreaView,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  Text,
+  View,
+  Alert
 } from 'react-native';
 import { graphql, compose } from 'react-apollo';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -32,11 +35,30 @@ class HomeScreen extends React.Component {
 
   handleRemoveTask = (item) => {
     const { mutate } = this.props;
-    mutate({
-      variables: {
-        id: item.id,
-      },
-    });
+    Alert.alert(
+      'Are you sure you want to delete task?',
+      '',
+      [
+        {
+          text: 'Yes',
+          onPress: () => {
+            mutate({
+              variables: {
+                id: item.id,
+              },
+              refetchQueries: [
+                {
+                  query: getTasks,
+                },
+              ],
+            })
+          },
+        },
+        {
+          text: 'No', onPress: () => {}, style: 'cancel'
+        },
+      ]
+    );
   };
 
   renderItem = ({item}) => {
@@ -81,6 +103,16 @@ class HomeScreen extends React.Component {
     );
   };
 
+  showEmptyList = () => {
+    return (
+      <View style={styles.emptyListView}>
+        <Text style={styles.emptyListText}>
+          There is no task to do!
+        </Text>
+      </View>
+    )
+  };
+
   render() {
     const {
       data: {
@@ -98,6 +130,7 @@ class HomeScreen extends React.Component {
         <FlatList
           data={tasks}
           renderItem={this.renderItem}
+          ListEmptyComponent={this.showEmptyList}
           keyExtractor={item => item.id}
         />
       </SafeAreaView>
@@ -127,5 +160,14 @@ const styles = StyleSheet.create({
   },
   listItem: {
     borderBottomWidth: 0
+  },
+  emptyListView: {
+    marginTop: 15,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  emptyListText: {
+    fontSize: 20,
+    opacity: 0.5
   }
 });
