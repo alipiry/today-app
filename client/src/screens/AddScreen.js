@@ -81,7 +81,7 @@ class AddScreen extends React.Component {
           autoFocus={true}
           style={styles.inputTitle}
           placeholder="Title"
-          onChangeText={(title) => this.handleTitle(title)}
+          onChangeText={title => this.handleTitle(title)}
           maxLength={40}
         />
         <TextInput
@@ -89,7 +89,7 @@ class AddScreen extends React.Component {
           multiline={true}
           style={styles.inputDescription}
           placeholder="Description"
-          onChangeText={(description) => this.handleDescription(description)}
+          onChangeText={description => this.handleDescription(description)}
           maxLength={100}
         />
         <TouchableOpacity
