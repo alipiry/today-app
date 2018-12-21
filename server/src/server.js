@@ -4,8 +4,8 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import typeDefs from './schema';
 import resolvers from './resolvers';
 import db from './models/index';
-import times from 'lodash.times';
-import faker from 'faker';
+// import times from 'lodash.times';
+// import faker from 'faker';
 
 const server = new ApolloServer({
   typeDefs: gql(typeDefs),
