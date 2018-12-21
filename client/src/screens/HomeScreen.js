@@ -126,7 +126,7 @@ class HomeScreen extends React.Component {
     } = this.props;
     this.setState({ isSearching: true });
 
-    const newData = tasks.filter(function(item) {
+    const newData = tasks.filter(item => {
       const itemData = item.title.toUpperCase();
       const textData = text.toUpperCase();
       return itemData.indexOf(textData) > -1;
@@ -135,9 +135,9 @@ class HomeScreen extends React.Component {
     this.setState({
       data: newData,
     });
-    // hack!
-    setTimeout(() => this.setState({isSearching: false}), 5000);
   };
+
+  handleOnClear = () => this.setState({ isSearching: false });
 
   render() {
     const {
@@ -153,6 +153,8 @@ class HomeScreen extends React.Component {
           lightTheme
           round
           onChangeText={text => this.handleSearch(text)}
+          onClear={this.handleOnClear}
+          autoCorrect={false}
         />
         <FlatList
           data={this.state.isSearching ? this.state.data : tasks}

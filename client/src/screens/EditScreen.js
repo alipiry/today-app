@@ -98,7 +98,7 @@ class EditScreen extends React.Component {
           defaultValue={state.params.title}
           style={styles.inputTitle}
           placeholder="Title"
-          onChangeText={(title) => this.handleTitle(title)}
+          onChangeText={title => this.handleTitle(title)}
           maxLength={40}
         />
         <TextInput
@@ -107,7 +107,7 @@ class EditScreen extends React.Component {
           defaultValue={state.params.content}
           style={styles.inputDescription}
           placeholder="Description"
-          onChangeText={(description) => this.handleDescription(description)}
+          onChangeText={description => this.handleDescription(description)}
           maxLength={100}
 
         />
